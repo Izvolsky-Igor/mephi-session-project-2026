@@ -1,0 +1,37 @@
+=== PAM CONFIG ===
+account    required     pam_access.so accessfile=/etc/security/access-mephi-console.conf
+-:curator1 curator2:ALL
++:ALL:ALL
+=== PASSWORD POLICY ===
+PASS_MAX_DAYS	90
+minlen = 12
+dcredit = 0
+ucredit = 0
+lcredit = 0
+ocredit = 0
+=== PASSWORD AGING ===
+=== igor ===
+=== user1 ===
+=== user2 ===
+=== user3 ===
+=== curator1 ===
+=== curator2 ===
+=== PAM ACCESS TEST ===
+=== curator1 ===
+pamtester: Permission denied
+=== curator2 ===
+pamtester: Permission denied
+=== user1 ===
+pamtester: account management done.
+=== user2 ===
+pamtester: account management done.
+=== user3 ===
+pamtester: account management done.
+=== igor ===
+pamtester: account management done.
+igor PS 2026-10-11 0 90 7 -1 (Пароль задан, шифр Yescrypt)
+user1 PS 2026-10-11 0 90 7 -1 (Пароль задан, шифр Yescrypt)
+user2 PS 2026-10-11 0 90 7 -1 (Пароль задан, шифр Yescrypt)
+user3 PS 2026-10-11 0 90 7 -1 (Пароль задан, шифр Yescrypt)
+curator1 PS 2026-10-11 0 90 7 -1 (Пароль задан, шифр Yescrypt)
+curator2 PS 2026-10-11 0 90 7 -1 (Пароль задан, шифр Yescrypt)

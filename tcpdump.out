@@ -1,0 +1,15 @@
+=== TCPDUMP PERMISSIONS ===
+-rwxr-x---. 1 root pcap 1299064 июл 30  2025 /usr/sbin/tcpdump
+=== CAPABILITIES ===
+/usr/sbin/tcpdump cap_net_raw=ep
+=== USER1 ===
+uid=5501(user1) gid=5501(user1) группы=5501(user1),1001(developers),5506(pcap)
+=== PACKET CAPTURE ===
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+15:32:16.421916 enp1s0 In  IP 192.168.122.1.47468 > 192.168.122.56.22: Flags [P.], seq 1949270935:1949270971, ack 1226235343, win 8165, options [nop,nop,TS val 4214919571 ecr 1493402298], length 36
+15:32:16.422037 enp1s0 Out IP 192.168.122.56.22 > 192.168.122.1.47468: Flags [P.], seq 1:37, ack 36, win 652, options [nop,nop,TS val 1493402316 ecr 4214919571], length 36
+15:32:16.441081 enp1s0 In  IP 192.168.122.1.47468 > 192.168.122.56.22: Flags [P.], seq 36:72, ack 37, win 8165, options [nop,nop,TS val 4214919590 ecr 1493402316], length 36
+3 packets captured
+111 packets received by filter
+0 packets dropped by kernel

@@ -1,0 +1,243 @@
+    1  cat /etc/os-release
+    2  hostnamectl
+    3  ip -br addr
+    4  mkdir -p ~/mephi-session-project-2026
+    5  cd ~/mephi-session-project-2026/
+    6  ping -c 4 8.8.8.8 > ping.out
+    7  cat ping.out 
+    8  sudo dnf upgrade
+    9  sudo dnf install nginx libcap-ng-utils
+   10  rpm -q nginx libcap-ng-utils
+   11  dnf download --destdir /tmp tcpdump
+   12  ls -lh /tmp/tcpdump*.rpm
+   13  sudo rpm -ivh /tmp/tcpdump-4.99.5-1.red80.x86_64.rpm 
+   14  rpm -q tcpdump
+   15  tcpdump --version
+   16  sudo dnf history > dnf.out
+   17  cat dnf.out 
+   18  sudo poweroff
+   19  lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS
+   20  sudo fdisk /dev/vdb
+   21  lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS
+   22  sudo mkfs.ext4 -L MEPHI_WEB /dev/vdb1
+   23  lsblk -f /dev/vdb
+   24  sudo mkdir -p /mephi-web
+   25  sudo blkid /dev/vdb1
+   26  sudo cp /etc/fstab /etc/fstab.bak 
+   27  sudo nano /etc/fstab
+   28  sudo cp /etc/fstab /etc/fstab.bak 
+   29  sudo blkid /dev/vdb1
+   30  UUID=$(sudo blkid -s UUID -o value /dev/vdb1)
+   31  sudo mkdir -p /mephi-web/
+   32  print 'UUID=$s /mephi-web ext4 defaults 0 2\n' "$UUID" | sudo tee -a /etc/fstab
+   33  printf 'UUID=$s /mephi-web ext4 defaults 0 2\n' "$UUID" | sudo tee -a /etc/fstab
+   34  tail -n 2 /etc/fstab
+   35  sudo systemctl daemon-reload
+   36  sudo mount -a findmnt /mephi-web
+   37  sudo sed -i '\| /mephi-web |d' /etc/fstab
+   38  echo "UUID=$(sudo blkid -s UUID -o value /dev/vdb1) /mephi-web ext4 defaults 0 2" | sudo tee -a /etc/fstab
+   39  tail -n 5 /etc/fstab
+   40  sudo systemctl daemon-reload
+   41  sudo mount -a findmnt /mephi-web
+   42  sudo mount -a
+   43  findmnt /mephi-web
+   44  sudo systemctl enable --now sshd
+   45  {   lsblk -f;   findmnt /mephi-web;   grep ' /mephi-web ' /etc/fstab; } > ~/mephi-session-project-2026/disk.out
+   46  cat ~/mephi-session-project-2026/disk.out 
+   47  sudo reboot
+   48  findmnt /mephi-web 
+   49  echo "=== Проверка после перезагрузки ===" >> ~/mephi-session-project-2026/disk.out
+   50  findmnt /mephi-web >> ~/mephi-session-project-2026/disk.out
+   51  systemctl status nginx
+   52  systemctl enable --now nginx
+   53  systemctl is-active nginx
+   54  systemctl is-enabled nginx
+   55  curl -I http://127.0.0.1
+   56  echo '<h1>MEPHI 2026 - RED OS 8</h1><p>Nginx is working!</p>' | sudo tee /mephi-web/site/index.html
+   57  cat /mephi-web/site/index.html
+   58  echo '<h1>MEPHI 2026 - RED OS 8</h1><p>Nginx is working!</p>' | sudo tee /mephi-web/site/index.html
+   59  sudo mkdir -p /mephi-web/site
+   60  echo '<h1>MEPHI 2026 - RED OS 8</h1><p>Nginx is working!</p>' | sudo tee /mephi-web/site/index.html
+   61  cat /mephi-web/site/index.html
+   62  getenforce 
+   63  ls -Zd /mephi-web/mephi-web/site /mephi-web/site/index.html 
+   64  command -v semanage
+   65  sudo dnf install policycoreutils-cycoreutils-python-utils
+   66  sudo dnf install policycoreutils-python-utils
+   67  command -v semanage
+   68  sudo semanage fcontext -a -t httpd_sys_content_t '/mephi-web(/.*)?'
+   69  sudo restorecon -RFv /mephi-web
+   70  ls -Zd /mephi-web/mephi-web/site /mephi-web/site/index.html 
+   71  ls -Zd /mephi-web /mephi-web/site /mephi-web/site/index.html 
+   72  sudo nginx -T 2>&1 | grep -nE 'listen|root|include|server_name'
+   73  sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+   74  sudo sed -i 's#root /usr/share/nginx/html;#root /mephi-web/site;#' /etc/nginx/nginx.conf
+   75  sudo nginx -T 2>&1 | grep 'root /mephi-web/site'
+   76  sudo /mephi-web/site;
+   77  sudo sed -i 's|/usr/share/nginx/html|/mephi-web/site|g' /etc/nginx/nginx.conf
+   78  sudo nginx -T 2>&1 | grep 'root'
+   79  sudo nginx -t
+   80  sudo systemctl reload nginx
+   81  curl http://127.0.0.1
+   82  { echo "=== Nginx status ==="; systemctl is-active nginx; systemctl is-enabled nginx; echo "=== HTTP response ==="; curl -i http://127.0.0.1; echo "=== SELinux ==="; getenforce; ls -Zd /mephi-web/site/index.html; } > ~/mephi-session-project-2026/nginx.out
+   83  cat ~/mephi-session-project-2026/nginx.out 
+   84  [200~{
+   85  echo "=== Nginx status ==="
+   86  systemctl is-active nginx
+   87  systemctl is-enabled nginx
+   88  echo "=== HTTP response ==="
+   89  curl -i http://127.0.0.1
+   90  echo "=== SELinux ==="
+   91  getenforce
+   92  ls -Zd /mephi-web/site/index.html
+   93  sudo journalctl -b -u nginx.service --no-pager > ~/mephi-linux-security-2026/journalctl.out
+   94  sudo journalctl -b -u nginx.service --no-pager > ~/mephi-session-project-2026/journalctl.out
+   95  cat ~/mephi-session-project-2026/journalctl.out 
+   96  ls mephi-session-project-2026/
+   97  getent passwd 5501 5502 5503
+   98  getent group 4444
+   99  getent passwd user1 user2 user3 curator1
+  100  getent passwd user1 user2 user3 curator1 curator2
+  101  getent group developers curators
+  102  sudo groupadd developers
+  103  sudo groupadd -g 4444 curators
+  104  sudo useradd -m -u 5501 -G developers user1
+  105  sudo useradd -m -u 5502 -G developers user2
+  106  sudo useradd -m -u 5503 -G developers user3
+  107  sudo useradd -m -G curators curator1
+  108  sudo useradd -m -G curators curator2
+  109  id user1
+  110  id user2
+  111  id user3
+  112  getent group curators
+  113  getent group developers
+  114  command -v setfacl
+  115  command -v getfacl
+  116  sudo mkdir -p /data/mephi-2026
+  117  sudo chown root:developers /data/mephi-2026/
+  118  sudo chmod 2770 /data/mephi-2026/
+  119  sudo setfacl -m g:curators:rx /data/mephi-2026/
+  120  sudo setfacl -d -m u::rwx,g::rwx,g:curators:rx,m::rwx,o::--- /data/mephi-2026/
+  121  getfacl /data/mephi-2026/
+  122  sudo -u user1 bash -c 'echo "Hello from user1" > /data/mephi-2026/test.txt'
+  123  sudo -u user2 bash -c 'echo "Hello from user2" >> /data/mephi-2026/test.txt'
+  124  sudo -u curator1 cat /data/mephi-2026/test.txt
+  125  sudo -u curator1 bash -c 'echo "Changed" >> /data/mephi-2026/test.txt'
+  126  cat /data/mephi-2026/test.txt
+  127  getfac1 /data/mephi-2026/test.txt
+  128  getfacl /data/mephi-2026/test.txt
+  129  sudo getfacl /data/mephi-2026/test.txt
+  130  sudo -u user3 bash -c 'echo "Hello from user3" >> /data/mephi-2026/test.txt'
+  131  sudo -u curator2 cat /data/mephi-2026/test.txt
+  132  sudo -u curator2 bash -c 'echo "Changed" >> /data/mephi-2026/test.txt'
+  133  sudo -u user1 mkdir /data/mephi-2026/modules
+  134  sudo -u user2 bash -c 'echo "New file" >> /data/mephi-2026/modules/demo.txt'
+  135  sudo -u user3 bash -c 'echo "Edited by user3" >> /data/mephi-2026/modules/demo.txt'
+  136  sudo -u curator2 cat /data/mephi-2026/modules/demo.txt
+  137  sudo getfacl /data/mephi-2026/modules
+  138  sudo getfacl -p /data/mephi-2026 /data/mephi-2026/modules /data/mephi-2026/modules/demo.txt > ~/mephi-session-project-2026/dac.out
+  139  cat ~/mephi-session-project-2026/dac.out
+  140  command -v tcpdump
+  141  ls -l "$(command -v tcpdump)"
+  142  getcap "$(command -v tcpdump)"
+  143  sudo groupadd pcap
+  144  sudo usermod -aG pcap user1
+  145  sudo chgpr pcap /usr/sbin/tcpdump
+  146  sudo chgrp pcap /usr/sbin/tcpdump
+  147  sudo chmod 750 /usr/sbin/tcpdump 
+  148  sudo setcap
+  149  sudo setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump 
+  150  getcap /usr/sbin/tcpdump 
+  151  ls -l /usr/sbin/tcpdump 
+  152  id user1
+  153  sudo -u user1 tcpdump -i any -nn -c 3
+  154  { echo "=== TCPDUMP PERMISSIONS ==="; ls -l /usr/sbin/tcpdump; echo "=== CAPABILITIES ==="; getcap /usr/sbin/tcpdump; echo "=== USER1 ==="; id user1; echo "=== PACKET CAPTURE ==="; sudo -u user1 tcpdump -i any -nn -c 3; } > ~/mephi-session-project-2026/tcpdump.out 2>&1
+  155  cat ~/mephi-session-project-2026/tcpdump.out 
+  156  sudo setcap cap_net_raw+ep /usr/sbin/tcpdump
+  157  getcap /usr/sbin/tcpdump
+  158  sudo -u user1 tcpdump -i any -p -nn -c 3
+  159  { echo "=== TCPDUMP PERMISSIONS ==="; ls -l /usr/sbin/tcpdump; echo "=== CAPABILITIES ==="; getcap /usr/sbin/tcpdump; echo "=== USER1 ==="; id user1; echo "=== PACKET CAPTURE ==="; sudo -u user1 tcpdump -i any -p -nn -c 3; } > ~/mephi-session-project-2026/tcpdump.out 2>&1
+  160  cat ~/mephi-session-project-2026/tcpdump.out 
+  161  getent passwd curator1 curator2 user1 user2 user3
+  162  sudo grep -n 'pam_access' /etc/pam.d/login
+  163  sudo cp -a /etc/pam.d/login
+  164  sudo cp -a /etc/pam.d/login /etc/pam.d/login.bak
+  165  sudo cat /etc/pam.d/login
+  166  ls -l /usr/lib64/security/pam_access.so 
+  167  printf '%s\n' '-:curator1 curator2:ALL' '+:ALL:ALL' | sudo tee /etc/security/access-mephi-console.conf
+  168  sudo nano /etc/pam.d/login
+  169  sudo grep -n 'pam_access' /etc/pam.d/login
+  170  sudo cat /etc/security/access-mephi-console.conf 
+  171  command -v pamtester
+  172  sudo dnf install pamtester
+  173  sudo pamtester login curator1 acct_mgmt
+  174* sudo pamtester login igor acct_mgmt
+  175  grep '^PASS_MAX_DAYS' /etc/login.defs
+  176  grep -n 'pam_pwquality' /etc/pam.d/system-auth 
+  177  sudo grep -R -n 'minlen' /etc/security/pwquality.conf /etc/security/pwquality.conf.d/ 2>/dev/null
+  178  sudo cp -a /etc/login.defs /etc/login.defs.bak
+  179  sudo nano /etc/login.defs
+  180  sudo cp -a /etc/security/pwquality.conf /etc/security/pwquality.conf.bak
+  181  sudo nano /etc/security/pwquality.conf
+  182  grep -E '^[[:space:]]*(minlen|[dulo]credit)[[:space:]]*=' /etc/security/pwquality.conf
+  183  grep '^PASS_MAX_DAYS' /etc/login.defs
+  184  for user in igor user1 user2 user3 curator1 curator2: do sudo chage -M 90 "$user" done; for user in igor user1 user2 user3 curator1 curator2: do sudo chage -M 90 "$user" done
+  185  for user in igor user1 user2 user3 curator1 curator2; do sudo chage -M 90 "$user"; done
+  186  sudo chage -l user1
+  187  sudo chage -l igor
+  188  sudo chage -M 90 user1
+  189  sudo chage -l user1
+  190  sudo passwd -S user1
+  191  for u in user2 user3 curator1 curator2; do sudo chage -M 90 "$u"; done
+  192  for u in user2 user3 curator1 curator2; do echo "=== $u ==="; sudo chage -l "$u" | grep "Максимальное количество"; done
+  193  sudo passwd user1
+  194  sudo passwd -S user1
+  195  sudo passwd user2
+  196  sudo passwd -S user2
+  197  sudo passwd user3
+  198  sudo passwd -S user3
+  199  sudo chage -l user2
+  200  sudo chage -l user3
+  201  sudo chage -l user1
+  202  sudo chage -M 90 curator1
+  203  sudo chage -M 90 curator2
+  204  sudo chage -l curator2
+  205  sudo chage -l curator1
+  206  sudo passwd curator1
+  207  sudo passwd curator2
+  208  sudo chage -l curator1
+  209  sudo pamtester login curator1 acct_mgmt
+  210  sudo pamtester login curator2 acct_mgmt
+  211  sudo pamtester login user1 acct_mgmt
+  212  { echo "=== PAM CONFIG ==="; sudo grep 'pam_access' /etc/pam.d/login; sudo cat /etc/security/access-mephi-console.conf;  echo "=== PASSWORD POLICY ==="; grep '^PASS_MAX_DAYS' /etc/login.defs; grep -E '^(minlen|[dulo]credit) *=' /etc/security/pwquality.conf;  echo "=== PASSWORD AGING ==="; for u in igor user1 user2 user3 curator1 curator2; do     echo "=== $u ===";     sudo chage -l "$u"; done;  echo "=== PAM ACCESS TEST ==="
+  213  { echo "=== PAM CONFIG ==="; sudo grep 'pam_access' /etc/pam.d/login; sudo cat /etc/security/access-mephi-console.conf;  echo "=== PASSWORD POLICY ==="; grep '^PASS_MAX_DAYS' /etc/login.defs; grep -E '^(minlen|[dulo]credit) *=' /etc/security/pwquality.conf;  echo "=== PASSWORD AGING ==="; for u in igor user1 user2 user3 curator1 curator2; do     echo "=== $u ===";     sudo chage -l "$u"; done;  echo "=== PAM ACCESS TEST ==="; for u in curator1 curator2 user1 user2 user3 igor; do     echo "=== $u ===";     sudo pamtester login "$u" acct_mgmt; done; } > ~/mephi-session-project-2026/auth.out 2>&1
+  214  cat ~/mephi-session-project-2026/auth.out 
+  215  for u in igor user1 user2 user3 curator1 curator2; do sudo passwd -S "$u"; done | tee -a ~/mephi-session-project-2026/auth.out 
+  216  tail -n 10 ~/mephi-session-project-2026/auth.out 
+  217  cat ~/mephi-session-project-2026/auth.out 
+  218  findmnt /mephi-web 
+  219  read -r -p "Введите номер зачетки: " STUDENT_ID
+  220  print 'Hello from Student: %s\n' "$STUDENT_ID" | sudo tee /mephi-web/index.html
+  221  printf 'Hello from Student: %s\n' "$STUDENT_ID" | sudo tee /mephi-web/index.html
+  222  cat /mephi-web/index.html 
+  223  sudo restorecon -v /mephi-web/index.html 
+  224  ls -lZ /mephi-web/index.html 
+  225  sudo cp -a /etc/nginx/nginx.conf /etc/nginx/nginx.conf.before-section7
+  226  sudo nano /etc/nginx/nginx.conf
+  227  sudo nginx -t
+  228  sudo systemctl reload nginx
+  229  curl http://localhost/
+  230  { echo "=== DISK ==="; findmnt /mephi-web; echo "=== WEB FILE ==="; ls -lZ /mephi-web/index.html; echo "=== NGINX STATUS ==="; systemctl is-active nginx; systemctl is-enabled nginx; echo "=== NGINX CONFIG ==="; sudo nginx -t; echo "=== HTTP RESPONSE ==="; curl -i http://localhost/; } > ~/mephi-session-project-2026/web.out 2>&1
+  231  cat ~/mephi-session-project-2026/web.out 
+  232  cd ~/mephi-session-project-2026/
+  233  ls -lah
+  234  du -ah ~/mephi-session-project-2026/
+  235  git --version
+  236  cd ..
+  237  dit --version
+  238  git --version
+  239  sudo dnf install -y git
+  240  git --version
+  241  cd mephi-session-project-2026/
+  242  ls -lah
+  243  history > history.out

@@ -1,0 +1,26 @@
+=== DISK ===
+TARGET     SOURCE    FSTYPE OPTIONS
+/mephi-web /dev/vdb1 ext4   rw,relatime,seclabel
+=== WEB FILE ===
+-rw-r--r--. 1 root root unconfined_u:object_r:httpd_sys_content_t:s0 27 окт 11 16:51 /mephi-web/index.html
+=== NGINX STATUS ===
+active
+enabled
+=== NGINX CONFIG ===
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+=== HTTP RESPONSE ===
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0100     27 100     27   0      0  38135      0                              0100     27 100     27   0      0  33498      0                              0100     27 100     27   0      0  30100      0                              0
+HTTP/1.1 200 OK
+Server: nginx/1.30.4
+Date: Sun, 11 Oct 2026 13:59:02 GMT
+Content-Type: text/html
+Content-Length: 27
+Last-Modified: Sun, 11 Oct 2026 13:51:45 GMT
+Connection: keep-alive
+ETag: "6acb9471-1b"
+Accept-Ranges: bytes
+
+Hello from Student: 375509

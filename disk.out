@@ -1,0 +1,16 @@
+NAME   FSTYPE FSVER LABEL     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sr0                                                                               
+zram0                                                                             [SWAP]
+vda                                                                               
+├─vda1                                                                            
+├─vda2 ext4   1.0             f756829e-f246-4f08-b065-fd3084a45d5d  632,3M    28% /boot
+├─vda3 swap   1               0a94a1ff-0d66-4546-ae6f-e9289de80b83                [SWAP]
+└─vda4 ext4   1.0             91f4e28b-8213-4c92-8de8-fcfd718d88d5   16,7G    15% /
+vdb                                                                               
+└─vdb1 ext4   1.0   MEPHI_WEB 5c73d4ee-2814-4aca-aa68-e3578d701156    7,4G     0% /mephi-web
+TARGET     SOURCE    FSTYPE OPTIONS
+/mephi-web /dev/vdb1 ext4   rw,relatime,seclabel
+UUID=5c73d4ee-2814-4aca-aa68-e3578d701156 /mephi-web ext4 defaults 0 2
+=== Проверка после перезагрузки ===
+TARGET     SOURCE    FSTYPE OPTIONS
+/mephi-web /dev/vdb1 ext4   rw,relatime,seclabel
